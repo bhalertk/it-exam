@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>115 資訊管理實務 考試重點</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f1117;--surface:#1a1d27;--card:#222632;--border:#2e3345;--accent:#4f8cff;--accent2:#6c5ce7;--text:#e2e6ef;--text2:#8b92a8;--green:#27ae60;--red:#e74c3c;--orange:#f39c12;--highlight:#4f8cff22}
+[data-theme="light"]{--bg:#f0f2f5;--surface:#ffffff;--card:#f7f8fa;--border:#dce0e8;--accent:#2563eb;--accent2:#7c3aed;--text:#1a1d27;--text2:#5c6370;--green:#16a34a;--red:#dc2626;--orange:#d97706;--highlight:#2563eb14}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+
+/* HEADER */
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;height:56px;gap:16px;transition:background .3s,border-color .3s}
+.header h1{font-size:18px;font-weight:700;white-space:nowrap}
+.header h1 span{color:var(--accent);font-weight:900}
+.tab-bar{display:flex;gap:4px;margin-left:auto}
+.tab-btn{padding:8px 20px;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;transition:.2s}
+.tab-btn.active{background:var(--accent);color:#fff}
+.tab-btn:hover:not(.active){background:var(--card)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
+.theme-toggle{background:none;border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.theme-toggle:hover{background:var(--card);border-color:var(--accent)}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:56px;left:0;bottom:0;width:280px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:16px 0;z-index:90;transition:transform .3s,background .3s}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.nav-group{margin-bottom:4px}
+.nav-dept{display:flex;align-items:center;padding:10px 20px;cursor:pointer;font-weight:700;font-size:14px;color:var(--text2);transition:.2s;gap:8px}
+.nav-dept:hover{color:var(--text);background:var(--highlight)}
+.nav-dept .arrow{transition:transform .2s;font-size:10px}
+.nav-dept.open .arrow{transform:rotate(90deg)}
+.nav-dept .badge{background:var(--accent2);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;margin-left:auto;font-weight:400}
+.nav-items{display:none;padding:0 0 8px}
+.nav-items.show{display:block}
+.nav-item{display:block;padding:6px 20px 6px 40px;font-size:13px;color:var(--text2);cursor:pointer;transition:.15s;border-left:2px solid transparent}
+.nav-item:hover,.nav-item.active{color:var(--accent);background:var(--highlight);border-left-color:var(--accent)}
+
+/* SEARCH */
+.search-box{padding:8px 16px;margin-bottom:8px}
+.search-box input{width:100%;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:inherit;outline:none}
+.search-box input:focus{border-color:var(--accent)}
+.search-box input::placeholder{color:var(--text2)}
+
+/* MAIN */
+.main{margin-left:280px;margin-top:56px;padding:32px 40px 80px;max-width:900px}
+.main h2{font-size:22px;font-weight:900;margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--accent);color:var(--accent)}
+.main h3{font-size:17px;font-weight:700;margin:24px 0 10px;color:var(--text)}
+.main h4{font-size:15px;font-weight:700;margin:16px 0 8px;color:var(--text2)}
+.main p{margin:8px 0}
+.main ul,.main ol{padding-left:24px;margin:8px 0}
+.main li{margin:4px 0}
+.main strong{color:var(--text);font-weight:700;background:var(--highlight);padding:0 3px;border-radius:3px}
+.main blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:12px 0;background:var(--highlight);border-radius:0 8px 8px 0;font-size:14px}
+.main table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.main th{background:var(--card);padding:10px 12px;text-align:left;font-weight:700;border:1px solid var(--border);white-space:nowrap}
+.main td{padding:8px 12px;border:1px solid var(--border);vertical-align:top}
+.main tr:hover td{background:var(--highlight)}
+.main code,.main pre{background:var(--card);border-radius:6px;font-size:13px}
+.main code{padding:2px 6px}
+.main pre{padding:16px;overflow-x:auto;margin:12px 0;border:1px solid var(--border);line-height:1.6}
+.dept-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding:20px 24px;background:var(--card);border-radius:12px;border:1px solid var(--border)}
+.dept-header .dept-icon{font-size:36px}
+.dept-header h1{font-size:24px;font-weight:900}
+.dept-header p{color:var(--text2);font-size:13px;margin-top:4px}
+.section{scroll-margin-top:72px}
+mark{background:var(--orange);color:#000;padding:1px 4px;border-radius:3px;font-weight:700}
+
+/* QUIZ */
+.quiz-panel{margin-left:280px;margin-top:56px;padding:32px 40px 80px;max-width:900px;display:none}
+.quiz-controls{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.quiz-controls select,.quiz-controls button{padding:10px 16px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;font-size:14px;font-family:inherit;cursor:pointer}
+.quiz-controls button{background:var(--accent);color:#fff;border:none;font-weight:700}
+.quiz-controls button:hover{opacity:.9}
+.quiz-controls .score{margin-left:auto;font-size:14px;color:var(--text2)}
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;transition:.2s}
+.quiz-card .q-num{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:8px}
+.quiz-card .q-dept{font-size:11px;color:var(--text2);margin-bottom:12px;background:var(--surface);display:inline-block;padding:2px 10px;border-radius:12px}
+.quiz-card .q-text{font-size:15px;font-weight:500;margin-bottom:16px;line-height:1.8}
+.quiz-option{display:block;padding:12px 16px;margin:6px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:.15s;font-size:14px}
+.quiz-option:hover{border-color:var(--accent);background:var(--highlight)}
+.quiz-option.selected{border-color:var(--accent);background:var(--highlight)}
+.quiz-option.correct{border-color:var(--green);background:#27ae6022;color:var(--green)}
+.quiz-option.wrong{border-color:var(--red);background:#e74c3c22;color:var(--red)}
+.quiz-option .opt-label{font-weight:700;margin-right:8px}
+.quiz-explain{display:none;margin-top:12px;padding:12px 16px;background:var(--surface);border-radius:8px;font-size:13px;color:var(--text2);border-left:3px solid var(--green)}
+.quiz-explain.show{display:block}
+.quiz-summary{background:var(--card);border-radius:12px;padding:32px;text-align:center;display:none}
+.quiz-summary h2{color:var(--accent);margin-bottom:16px}
+.quiz-summary .big-score{font-size:64px;font-weight:900;color:var(--green)}
+.quiz-summary p{color:var(--text2);margin:8px 0}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main,.quiz-panel{margin-left:0;padding:24px 16px 80px}
+  .menu-toggle{display:block}
+  .header h1{font-size:14px}
+  .overlay{display:none;position:fixed;inset:0;background:#0008;z-index:85}
+  .overlay.show{display:block}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+  <h1><span>115</span> 資訊管理實務 考試重點</h1>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('read')">📖 閱讀</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">✏️ 測驗</button>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="切換主題">🌙</button>
+</div>
+<div class="overlay" onclick="toggleSidebar()"></div>
+
+<nav class="sidebar" id="sidebar"></nav>
+<div class="main" id="readPanel"></div>
+<div class="quiz-panel" id="quizPanel"></div>
+
+<script>
+// ====== DATA ======
+const departments = [
+  {id:'admin',icon:'🏢',name:'行政管理部',sections:[
+    {t:'基本資訊',html:`<table><tr><th>項目</th><th>內容</th></tr><tr><td>管理單位</td><td><strong>行政管理部</strong>（財產科）</td></tr><tr><td>訂定日期</td><td>民國 <strong>113年5月9日</strong></td></tr><tr><td>核定層級</td><td>行政管理群群主管</td></tr></table>`},
+    {t:'申請資格（第3條）⭐',html:`<p>符合以下<strong>任一</strong>條件，可填具「資訊大樓宿舍申請書」：</p><ol><li>設籍於<strong>新竹（含）以南、宜蘭、花蓮、台東、澎湖、金、馬</strong>等縣市</li><li>通勤單程達 <strong>60分鐘以上</strong></li><li>本行其他業務管理單位因<strong>執行業務需要</strong>之行員</li></ol><blockquote>申請需經<strong>單位主管核准</strong>後，送行政管理部財產科登記。</blockquote>`},
+    {t:'配住順序（第4條）⭐',html:`<p>每間房原則住<strong>一人</strong>，優先順序：</p><ol><li><strong>主管級以上</strong>人員優先</li><li>新任或由符合第3條第1款縣市調任者</li><li>其餘按<strong>申請日期</strong>先後</li></ol>`},
+    {t:'使用費（第5條）⭐',html:`<table><tr><th>房型</th><th>費用</th></tr><tr><td>單人房</td><td><strong>每月 5,000元</strong></td></tr><tr><td>雙人房</td><td><strong>每月 2,500元</strong></td></tr></table><p>費用自住宿行員<strong>當月薪資</strong>扣收。</p>`},
+    {t:'住宿期限與退宿（第6條）⭐⭐',html:`<table><tr><th>情況</th><th>應辦事宜</th></tr><tr><td>住滿<strong>3年</strong></td><td>次日遷出</td></tr><tr><td>離職</td><td>離職日遷出</td></tr><tr><td>職務異動調離資訊管理群</td><td>調職生效日遷出</td></tr><tr><td>延長</td><td>最多<strong>1次</strong>，最長<strong>3年</strong></td></tr></table><p>損壞設備按<strong>採購或修繕價格</strong>賠償。</p>`},
+    {t:'安全規定重點',html:`<h4>門禁（第7條）</h4><ul><li>須持<strong>員工識別證</strong>感應進出</li><li>不得任意調換房間、留宿他人、無居住事實或挪作其他用途</li></ul><h4>行為規範（第8條）</h4><ul><li>嚴禁<strong>酗酒、賭博</strong>及不正當行為</li><li>個人房間使用影音設備應<strong>戴耳機</strong></li></ul><h4>防火安全（第10條）⭐</h4><ul><li><strong>嚴禁</strong>使用炊膳設備（含加熱用電器）</li><li>不得堆放物品於<strong>樓梯及通道</strong></li></ul><h4>用電安全（第11條）⭐</h4><ul><li>嚴禁使用耗電功率 <strong>超過800瓦特（W）</strong> 以上之非生活必需電器</li></ul>`},
+    {t:'緊急事故處置（第12條）⭐',html:`<table><tr><th>事故</th><th>處置方式</th></tr><tr><td><strong>空襲</strong></td><td>燈火管制、疏散、聽從大樓管理中心指導</td></tr><tr><td><strong>盜警</strong></td><td>撥打 <strong>110</strong> + 通報大樓管理中心</td></tr><tr><td><strong>火警</strong></td><td>消防栓或滅火器、撥打 <strong>119</strong> + 通報大樓管理中心</td></tr><tr><td><strong>颱風</strong></td><td>個人<strong>房間門窗電器自行關閉</strong></td></tr></table>`},
+    {t:'違規處置（第13條）',html:`<ul><li>情節嚴重→得<strong>取消住宿資格</strong></li><li>列入<strong>平時考核及年度績效評核</strong>參考</li></ul>`}
+  ]},
+  {id:'hr',icon:'👥',name:'人力資源部',sections:[
+    {t:'工作規則第17條（服務守則）⭐⭐⭐',html:`<p>員工應以<strong>誠實、清廉、敬業</strong>精神，貫徹<strong>信賴、熱誠、創新</strong>之企業經營理念。</p><table><tr><th>款次</th><th>重點</th></tr><tr><td>第2款</td><td>職務無關之帳表文件<strong>不得翻閱</strong></td></tr><tr><td>第5款</td><td>不得藉職務便利<strong>營私舞弊</strong></td></tr><tr><td>第7款</td><td>涉及本身或家族利害事件→應<strong>迴避</strong></td></tr><tr><td>第9款</td><td>上級指示有服從義務；明知<strong>違反法令行規</strong>者不在此限</td></tr><tr><td>第15款</td><td>不得經營商業/投機事業/兼任公職（<strong>經本行同意</strong>除外）</td></tr><tr><td>第18款</td><td>員工<strong>相互間不得借貸</strong>；<strong>正當用途經主管報備</strong>除外 ⭐⭐</td></tr><tr><td>第19款</td><td>與客戶<strong>不得異常資金往來</strong>（借貸/代墊/帳戶流用）⭐⭐</td></tr><tr><td>第20款</td><td>秉持「<strong>顧客至上，服務第一</strong>」</td></tr><tr><td>第24款</td><td>不得攜帶<strong>違禁品或危險品</strong>；庫房禁止吸煙</td></tr><tr><td>第27款</td><td>不得有<strong>性騷擾</strong>行為</td></tr></table>`},
+    {t:'員工平時考核要點⭐',html:`<h4>考核六大項目（第2條）</h4><ol><li><strong>品德生活</strong>：忠誠廉正、業務機密</li><li><strong>工作</strong>：效率、互助合作、服務顧客</li><li><strong>勤惰</strong>：準時上下班、遲到早退曠職</li><li><strong>學識</strong>：專業知識、進修情形</li><li><strong>才能</strong>：領導/協調/理解/表達/應變能力</li><li><strong>其他</strong>：儀態、身心健康、愛惜公物</li></ol><h4>關鍵數字</h4><table><tr><th>條次</th><th>重點</th></tr><tr><td>第4條</td><td>營業單位經理每季至少<strong>一次</strong>考核</td></tr><tr><td>第5條</td><td>人事管理員於<strong>次月五日以前</strong>登載月報表</td></tr><tr><td>第9條</td><td>發現疑似<strong>洗錢或資恐</strong>→向<strong>防制洗錢專責單位</strong>陳報</td></tr><tr><td>第14條</td><td>經<strong>董事長</strong>核定後實施</td></tr></table>`},
+    {t:'特別考核事項（第3條）⭐',html:`<ul><li>生活奢侈腐化、賭博、進出不正當場所</li><li>暗中經營商業或從事<strong>股票投機</strong>買賣</li><li>與同事或客戶<strong>金錢往來頻繁或招標會倒會</strong></li><li>故意協助客戶<strong>洗錢</strong>（含稅務洗錢）</li><li>生活方式<strong>與薪資所得顯不相當</strong></li><li>無法合理解釋自有帳戶之<strong>大額資金進出</strong></li></ul>`},
+    {t:'銀行法第125條之2（背信罪）⭐⭐',html:`<blockquote>銀行職員違背職務致生損害→<strong>處三年以上十年以下有期徒刑</strong>，得併科<strong>新臺幣一千萬元以上二億元以下罰金</strong>。</blockquote><p>工作規則第42條：侵占挪用公款→<strong>記大過二次免職</strong>。</p>`},
+    {t:'重要函文速查⭐⭐',html:`<table><tr><th>日期</th><th>核心主旨</th></tr><tr><td>114/9/1</td><td>恪守法令、背信罪3~10年</td></tr><tr><td>114/12/3</td><td>新版<strong>員工行為承諾書</strong>，114年<strong>12月20日前</strong>完成簽署</td></tr><tr><td>115/1/14</td><td><strong>不得使用他人帳號密碼</strong>；<strong>密薪制</strong>不得洩漏</td></tr><tr><td>115/1/28</td><td>嚴守紀律，定期辦理<strong>職位輪調</strong>防弊</td></tr><tr><td>113/2/21</td><td>禁止透過<strong>行員家人帳戶</strong>不正常資金移轉</td></tr><tr><td>113/5/16</td><td>禁止以<strong>華銀支付</strong>代客戶繳稅</td></tr><tr><td>113/9/30</td><td>禁止與客戶<strong>約定特定利益/對價/負擔損失</strong></td></tr><tr><td>114/7/31</td><td>超時加班差勤管理最高<strong>扣10分</strong>；禁止<strong>情緒用語</strong></td></tr></table><p>宣導程序：文到<strong>一週內</strong>，由<strong>單位經理</strong>於內部會議宣導，人事管理員留存。</p>`}
+  ]},
+  {id:'sec',icon:'🔒',name:'資訊安全部',sections:[
+    {t:'資訊安全推動小組⭐',html:`<table><tr><th>角色</th><th>人員</th></tr><tr><td>召集人</td><td>督導資訊管理群之<strong>副總經理</strong></td></tr><tr><td>副召集人</td><td>資安部/資作部/資規部<strong>經理</strong></td></tr><tr><td>委員</td><td>風管/法遵等單位主管及資訊單位<strong>科長級以上</strong></td></tr></table><p>會議頻率：每年<strong>一月、七月</strong>各一次，共<strong>二次</strong>。</p>`},
+    {t:'資訊安全風險評鑑⭐⭐',html:`<p>資訊資產五大類別：<strong>硬體、軟體、資料、文件、人員</strong></p><ul><li>由<strong>資訊資產保管者</strong>每<strong>半年</strong>執行一次，由<strong>擁有者</strong>覆核</li><li>風險可接受水準：<strong>17</strong></li><li>風險權值 = 資產價值 × 弱點權值 × 威脅權值</li><li>各因子分高(3)/中(2)/低(1)，最低1，最高<strong>27</strong></li></ul>`},
+    {t:'資訊安全指標⭐',html:`<ul><li>量測範圍：<strong>機密性、完整性、可用性</strong></li><li>負責人員每年至少檢討<strong>一次</strong></li><li>按月統計之指標<strong>連續三期</strong>未達目標值→執行矯正措施</li></ul>`},
+    {t:'資安政策與文件編碼⭐⭐',html:`<p>資訊安全政策（SP-001）：核定層級=<strong>董事會</strong>，每年至少審查<strong>一次</strong>。</p><table><tr><th>階層</th><th>代碼</th><th>全名</th></tr><tr><td>第一階（政策）</td><td><strong>SP</strong></td><td>Security Policy</td></tr><tr><td>第二階（規範）</td><td><strong>SR</strong></td><td>Security Regulation</td></tr><tr><td>第三階（作業程序）</td><td><strong>SW</strong></td><td>Security Workbook</td></tr></table><p>紀錄保存至少<strong>三年</strong>；銷毀需填申請單經核准後以<strong>碎紙機絞碎或撕毀</strong>。</p>`},
+    {t:'教育訓練時數⭐⭐',html:`<table><tr><th>人員類別</th><th>時數</th></tr><tr><td>資安<strong>專責單位</strong>人員</td><td>≥ <strong>15小時</strong></td></tr><tr><td>其他單位人員</td><td>≥ <strong>3小時</strong></td></tr></table><p>年度計畫：<strong>1月中旬</strong>完成；成果陳報：<strong>1月底前</strong>。</p><p>資安職能外訓：預算內→<strong>經理</strong>核定；預算外→<strong>總經理</strong>核定。</p>`},
+    {t:'電子郵件與社交工程演練⭐',html:`<p>危險附件：<strong>.exe .com .scr .bat .cmd .lnk</strong></p><p>禁止使用一切<strong>外部網頁式電子郵件</strong>。含多媒體檔/執行檔/加密檔/營業秘密→<strong>隔離</strong>。</p><p>社交工程演練：每年<strong>不定期二次</strong>，每次<strong>10封</strong>，對象<strong>全行員工</strong>。</p><p>未通過定義（5種）：下載圖片/點選圖片連結/點擊URL/開啟附檔/轉寄信件。</p><p>電子郵件定期放行申請期限：<strong>半年</strong>。</p>`},
+    {t:'防火牆規則管理⭐',html:`<p>基本規則：行內→外開放<strong>http/https</strong>；郵件閘道→<strong>SMTP</strong>；其餘<strong>一律禁止</strong>。</p><table><tr><th>用途</th><th>期限</th></tr><tr><td>測試環境</td><td><strong>一年</strong></td></tr><tr><td>監控/權限管理/伺服器連線</td><td>最長<strong>五年</strong></td></tr></table><p>連線紀錄至少保留<strong>五年</strong>（IP/FTP/SSLVPN/監控日誌亦同）。</p>`},
+    {t:'防毒軟體⭐',html:`<ul><li>每月執行<strong>一次</strong>全機掃描</li><li>掃描未完成率 ><strong>5%</strong> →<strong>扣2分</strong></li><li>觸發病毒告警→<strong>隔一營業日</strong>執行ANTIVIR01報表簽核（單位主管決行）</li><li>USB須先經<strong>掃毒機</strong>掃描確認無病毒</li></ul>`},
+    {t:'資安事件分類與通報⭐⭐',html:`<table><tr><th>等級</th><th>情形</th></tr><tr><td><strong>重大</strong></td><td>機密等級資料洩漏/竄改；關鍵作業<strong>無法</strong>於RTO內回復</td></tr><tr><td><strong>一般</strong></td><td>內部限閱等級洩漏/竄改；關鍵作業<strong>可</strong>於RTO內回復</td></tr></table><p>緊急通報：<strong>30分鐘內</strong>。證券期貨通報系統資安聯絡人：<strong>資安管理科副科長</strong>。</p>`},
+    {t:'客戶資料管控⭐',html:`<p>禁止透過<strong>Line/社群平台</strong>傳輸。下載後<strong>禁止複製列印影印</strong>。電子檔刪除後清除<strong>資源回收筒</strong>。備查簿保留<strong>7年</strong>。</p>`},
+    {t:'弱點修補期限⭐⭐',html:`<table><tr><th>風險</th><th>第一類</th><th>第二類</th><th>第三類</th></tr><tr><td><strong>高風險以上</strong></td><td><strong>20</strong>日</td><td><strong>30</strong>日</td><td><strong>45</strong>日</td></tr><tr><td>中風險</td><td>60日</td><td>60日</td><td>60日</td></tr><tr><td>低風險</td><td>90日</td><td>90日</td><td>90日</td></tr></table><p>威脅情資評估：第一類<strong>1日</strong>/第二類<strong>2日</strong>/第三類<strong>3日</strong>。</p>`},
+    {t:'雲端服務（SR-063）⭐',html:`<p><strong>SaaS</strong>=軟體即服務，<strong>PaaS</strong>=平台即服務，<strong>IaaS</strong>=基礎設施即服務。</p><p>提供者須通過<strong>ISO 27017/27018</strong>及<strong>CSA STAR</strong>認證。</p><p>客戶資料以<strong>我國境內</strong>儲存為原則；境外→我國留存備份。</p><p>規章每年至少<strong>檢視一次</strong>。重大境外委外服務→每年至少<strong>一次查核</strong>。</p>`},
+    {t:'資安設備效能與監控⭐',html:`<p>設備效能要求：第1級<strong>70%</strong>/第2級<strong>80%</strong>/第3級<strong>90%</strong>以下。</p><p>量測標準：每日峰值達當月<strong>三分之二工作日</strong>以上。每年評估汰換<strong>一次</strong>。</p><p>監控時段：日班<strong>08:50~17:00</strong>、小夜班<strong>13:00~21:00</strong>。</p>`}
+  ]},
+  {id:'ops',icon:'⚙️',name:'資訊作業服務部',sections:[
+    {t:'核心系統架構',html:`<p>核心系統：<strong>56項</strong>主要業務。架構：<strong>雙主機平行處理</strong>（Parallel Sysplex）+ HyperSwap。</p><p>台北主中心：<strong>2台</strong>主機 + <strong>2座</strong>磁碟機。中壢第二資訊中心：<strong>1台</strong>備援主機 + <strong>2座</strong>備援磁碟機。</p><p>資料庫：<strong>IMS</strong>=階層式、<strong>DB2</strong>=關聯式。</p><p>備援演練每年至少<strong>一次</strong>。</p>`},
+    {t:'電腦系統三類分類（SR-003）⭐⭐',html:`<table><tr><th>類別</th><th>定義</th><th>舉例</th></tr><tr><td><strong>第一類</strong></td><td>直接客戶自動化服務/<strong>重大影響</strong></td><td>電子銀行/分行櫃台/ATM/SWIFT</td></tr><tr><td><strong>第二類</strong></td><td>經<strong>人工介入</strong>間接服務</td><td>作業中心/客戶服務</td></tr><tr><td><strong>第三類</strong></td><td>未接觸客戶/<strong>無影響</strong></td><td>人資/財會/物聯網設備</td></tr></table><p><strong>關鍵資訊作業</strong>=屬第一類且對營運有重大影響。</p><p>BIA營運衝擊分析每<strong>半年</strong>執行一次。重要名詞：<strong>MTPD/RTO/RPO</strong>。</p>`},
+    {t:'密碼設定（SR-029）⭐⭐',html:`<table><tr><th>項目</th><th>規定</th></tr><tr><td>長度</td><td>≥ <strong>12字元</strong>（系統不支援最少<strong>8字元</strong>）</td></tr><tr><td>變更週期</td><td>最長<strong>90天</strong>或<strong>13週</strong></td></tr><tr><td>歷程</td><td>至少前<strong>3代</strong>不重複</td></tr><tr><td>錯誤鎖定</td><td>連續<strong>5次</strong>→帳號停用</td></tr><tr><td>最短使用</td><td>至少<strong>5天</strong></td></tr><tr><td>物聯網密碼</td><td>至少<strong>6位</strong></td></tr></table>`},
+    {t:'最高權限管理（SR-032）⭐⭐',html:`<ul><li>密碼分為<strong>A/B part</strong>密封於機房保險櫃</li><li>網域特權帳號每<strong>三個月</strong>變更一次</li><li>正式環境使用時間：營業日<strong>下午一時</strong>起至翌日零時</li><li>操作行為<strong>錄影</strong>留存，備份至少<strong>五年</strong></li><li>每一營業日抽檢<strong>10件</strong>操作錄影</li><li>密碼函一經拆封→次一營業日<strong>重新設定密碼並重新彌封</strong></li></ul>`},
+    {t:'機房管理（SR-037）⭐',html:`<table><tr><th>條文</th><th>重點</th></tr><tr><td>第3條</td><td>錄影保存至少<strong>三個月</strong></td></tr><tr><td>第8條</td><td>禁止攜入磁性/放射性/易燃性/易爆性物品；禁嬉戲吸煙飲食</td></tr><tr><td>第17條</td><td>溫度<strong>16~25°C</strong>；濕度<strong>40%~70%</strong></td></tr><tr><td>第19條</td><td>滅火藥劑以<strong>對設備損害最小</strong>為原則（避免灑水式）</td></tr><tr><td>第25條</td><td>送修設備應<strong>移除機密等級資料</strong></td></tr><tr><td>第26條</td><td>報廢前清除<strong>限閱等級以上資料</strong>；合格廠商銷毀、<strong>派員監督拍照</strong></td></tr></table>`},
+    {t:'監控巡檢警戒值（SW-013）⭐',html:`<table><tr><th>項目</th><th>警戒值</th></tr><tr><td><strong>磁碟</strong>使用率</td><td><strong>80%</strong></td></tr><tr><td><strong>CPU/記憶體</strong>使用率</td><td><strong>90%</strong></td></tr><tr><td><strong>網路頻寬</strong>使用率</td><td><strong>85%</strong></td></tr></table><p>批次作業期間不納入警戒值限制。</p>`},
+    {t:'緊急事故處置（SR-011）⭐⭐',html:`<p>處置小組：資規部+資作部+資安部，召集人=事故發生部門<strong>部主管</strong>。</p><p>通報：各單位→<strong>資訊服務科</strong>→<strong>30分鐘內</strong>通報群主管等。影響客戶→通知<strong>客戶服務部</strong>。</p>`},
+    {t:'變更管理（SR-013）⭐',html:`<p>一般變更：<strong>副主管</strong>以上核可。重要變更：<strong>單位主管</strong>核可。</p><p>重大變更（核心/一類系統）→<strong>資訊安全長</strong>主持變更管理會議。</p><p>農曆春節：假期始日<strong>前一個月起</strong>禁止變更（例外需群主管書面同意）。</p>`},
+    {t:'端末電腦與報表⭐',html:`<p>LD01報表（USB使用）：決行人員<strong>單位副主管</strong>以上。LD02報表（共用資料夾）：線上簽核。</p><p>端末電腦一律<strong>加入網域</strong>、安裝資產管理軟體、收回本機最高權限、停用Guest。</p><p>特殊權限每<strong>半年</strong>清查。物聯網設備清冊每年更新。IP清查每年至少<strong>一次</strong>。</p><p>硬碟銷毀：<strong>消磁→物理破壞→合格廠商實體銷毀</strong>。格紋袋Y-003/密封袋Y-005。</p>`},
+    {t:'金融卡廢卡（SR-020）⭐',html:`<p>作廢金融卡由<strong>資訊服務科</strong>打洞，<strong>資訊內控管理科</strong>專人保管。</p><p>每隔<strong>二年</strong>或累計<strong>二千張</strong>→簽報<strong>副總經理</strong>核准→<strong>駐行稽核</strong>會同銷毀。</p>`}
+  ]},
+  {id:'dev',icon:'💻',name:'資訊規劃開發部',sections:[
+    {t:'應用程式管理（SR-010）⭐⭐⭐',html:`<p>系統開發流程：<strong>可行性分析→需求分析→系統分析→撰寫測試→驗收上線</strong></p><p>專案時程 < <strong>200人日</strong>者得逕予辦理（免可行性分析報告）。</p><p>程式撰寫：<strong>二人以上</strong>、測試環境、定期備份。</p><p>驗收文件<strong>11項</strong>，製成<strong>兩份</strong>供<strong>同異地存放</strong>。</p>`},
+    {t:'CODE REVIEW五種程式⭐⭐',html:`<ol><li>使用者登錄及<strong>權限與密碼</strong>有關程式</li><li><strong>海外網路銀行轉帳</strong>交易</li><li><strong>連線帳務類</strong>程式</li><li><strong>批次帳務類</strong>程式</li><li>報送<strong>聯徵中心授信資料</strong>之程式</li></ol>`},
+    {t:'APP管理⭐',html:`<p>首次發布或權限變動→需經<strong>法遵主管+資安部+法遵部+風管部</strong>審視。</p><p>委外APP未取得原始碼→<strong>防毒掃描</strong>+廠商提供<strong>原始碼或黑箱檢測報告</strong>。</p>`},
+    {t:'變更管理（SR-013詳細）⭐⭐',html:`<p>變更管理五步驟：<strong>申請初核→技術業務審核→測試驗證→排程同意→實施覆核結案</strong></p><p>核可：一般→<strong>副主管</strong>；重要→<strong>單位主管</strong>。</p><p>第12條第6款（核心/一類系統重大變更）→<strong>資訊安全長</strong>主持會議。</p><p>農曆春節：<strong>前一個月起</strong>禁止營運環境變更。</p>`},
+    {t:'使用者權限管理要點⭐⭐',html:`<p>三大原則：<strong>最小權限</strong>、<strong>職務分工與牽制</strong>、帳號異動需<strong>主管同意</strong>+保留稽核軌跡。</p><table><tr><th>系統類別</th><th>清查頻率</th></tr><tr><td>資訊系統</td><td>至少<strong>每年一次</strong></td></tr><tr><td>業務應用系統</td><td>至少<strong>每半年一次</strong></td></tr></table><p>核定層級：<strong>董事長</strong>。</p>`},
+    {t:'外包人員管理（SR-024）⭐',html:`<ul><li>外包室網路為<strong>獨立網段</strong>，僅可連接<strong>測試環境</strong></li><li><strong>不得</strong>連結內部網路或網際網路</li><li>禁止P2P/即時通訊/上傳下載/側錄監控軟體</li><li>進出機房須本行人員<strong>陪同</strong></li><li>未經許可不得<strong>複製/傳輸/攜出</strong>檔案</li></ul>`},
+    {t:'軟體品質管理（SR-030）⭐',html:`<table><tr><th>等級</th><th>適用範圍</th></tr><tr><td><strong>第一級</strong></td><td>需求變動/新增程式/瑕疵改善/畫面變動</td></tr><tr><td><strong>第二級</strong></td><td>系統提升/<strong>架構改變</strong>造成之軟硬體變動</td></tr></table><p>產出文件：品管測試計劃/個案紀錄/<strong>異常報告書</strong>/<strong>報告書</strong>。</p>`}
+  ]}
+];
+
+// ====== QUIZ DATA ======
+const quizBank = [
+  // 行政管理部
+  {dept:'行政管理部',q:'資訊大樓宿舍的管理單位為？',opts:['資訊作業服務部','行政管理部','人力資源部','資訊安全部'],ans:1,exp:'依第2條，管理單位為行政管理部（財產科）。'},
+  {dept:'行政管理部',q:'宿舍使用費單人房每月多少元？',opts:['3,000元','4,000元','5,000元','6,000元'],ans:2,exp:'依第5條，單人房每月5,000元，雙人房每月2,500元。'},
+  {dept:'行政管理部',q:'宿舍住宿期限屆滿幾年應遷出？',opts:['1年','2年','3年','5年'],ans:2,exp:'依第6條，住宿期間屆滿三年之次日應遷出。'},
+  {dept:'行政管理部',q:'宿舍延長住宿最多可延長幾次？',opts:['1次','2次','3次','不限'],ans:0,exp:'依第6條，延長住宿最多一次，最長三年。'},
+  {dept:'行政管理部',q:'宿舍嚴禁使用耗電功率超過多少瓦特以上的電器？',opts:['500W','600W','800W','1000W'],ans:2,exp:'依第11條，嚴禁超過800瓦特（W）以上高耗電之非生活必需電器。'},
+  {dept:'行政管理部',q:'遇盜警時應撥打哪個電話報案？',opts:['119','110','112','118'],ans:1,exp:'依第12條，盜警應立即向110盜警台報案。'},
+  {dept:'行政管理部',q:'通勤至資訊大樓單程達幾分鐘以上可申請宿舍？',opts:['30分鐘','45分鐘','60分鐘','90分鐘'],ans:2,exp:'依第3條第2款，單程時間達60分鐘以上者可申請。'},
+  // 人力資源部
+  {dept:'人力資源部',q:'員工平時考核分為幾大項目？',opts:['4項','5項','6項','8項'],ans:2,exp:'依考核要點第2條，分品德生活、工作、勤惰、學識、才能、其他等六項。'},
+  {dept:'人力資源部',q:'人力資源部對營業單位經理每季至少辦理幾次考核？',opts:['一次','二次','三次','四次'],ans:0,exp:'依考核要點第4條，每季至少對每位經理辦理一次。'},
+  {dept:'人力資源部',q:'人事管理員應於次月幾日以前登載月報表？',opts:['三日','五日','七日','十日'],ans:1,exp:'依考核要點第5條，次月五日以前。'},
+  {dept:'人力資源部',q:'銀行法第125條之2背信罪最低刑期為？',opts:['一年','二年','三年','五年'],ans:2,exp:'處三年以上十年以下有期徒刑。'},
+  {dept:'人力資源部',q:'銀行法背信罪得併科罰金上限為？',opts:['一千萬元','五千萬元','一億元','二億元'],ans:3,exp:'得併科新臺幣一千萬元以上二億元以下罰金。'},
+  {dept:'人力資源部',q:'員工行為承諾書應於何時前完成簽署？',opts:['114年11月30日','114年12月20日','115年1月31日','115年3月31日'],ans:1,exp:'依114年12月3日函，114年12月20日前完成簽署。'},
+  {dept:'人力資源部',q:'員工考核要點經何人核定後實施？',opts:['總經理','副總經理','董事長','董事會'],ans:2,exp:'依考核要點第14條，經董事長核定後實施。'},
+  {dept:'人力資源部',q:'發現屬員疑似洗錢交易應向何單位陳報？',opts:['單位主管','人力資源部','防制洗錢專責單位','董事會稽核部'],ans:2,exp:'依考核要點第9條，應即向防制洗錢專責單位陳報。'},
+  // 資訊安全部
+  {dept:'資訊安全部',q:'資訊安全推動小組召集人由誰擔任？',opts:['總經理','資安部經理','督導資訊管理群之副總經理','董事長'],ans:2,exp:'召集人由督導資訊管理群之副總經理擔任。'},
+  {dept:'資訊安全部',q:'現行風險可接受水準為多少？',opts:['12','15','17','20'],ans:2,exp:'現行採用之風險可接受水準為17。'},
+  {dept:'資訊安全部',q:'資訊資產風險權值最高為？',opts:['9','18','24','27'],ans:3,exp:'3×3×3=27，最高為27。'},
+  {dept:'資訊安全部',q:'資訊安全專責單位人員每年至少接受幾小時訓練？',opts:['3小時','8小時','12小時','15小時'],ans:3,exp:'至少15小時以上資訊安全專業課程訓練或職能訓練。'},
+  {dept:'資訊安全部',q:'資訊安全政策（SP-001）經何層級核定？',opts:['總經理','資訊管理群群主管','董事長','董事會'],ans:3,exp:'SP-001經董事會通過後實施。'},
+  {dept:'資訊安全部',q:'社交工程演練每年辦理幾次？',opts:['一次','二次','三次','四次'],ans:1,exp:'每年不定期實施二次。'},
+  {dept:'資訊安全部',q:'社交工程演練每次寄發幾封測試郵件？',opts:['5封','8封','10封','15封'],ans:2,exp:'於演練期間內寄發10封社交工程演練電子郵件。'},
+  {dept:'資訊安全部',q:'防火牆連線紀錄至少保留幾年？',opts:['1年','3年','5年','7年'],ans:2,exp:'至少保留五年。'},
+  {dept:'資訊安全部',q:'全機掃描未完成比率大於多少之營業單位予以扣分？',opts:['3%','5%','8%','10%'],ans:1,exp:'未完成比率大於5%之營業單位予以扣2分。'},
+  {dept:'資訊安全部',q:'緊急事故發生後資訊服務科應於幾分鐘內通報？',opts:['10分鐘','15分鐘','30分鐘','60分鐘'],ans:2,exp:'於知悉或接獲通報三十分鐘內通報。'},
+  {dept:'資訊安全部',q:'第一類系統高風險弱點應於幾個營業日內修補？',opts:['10日','20日','30日','45日'],ans:1,exp:'第一類系統20個營業日內完成修補。'},
+  {dept:'資訊安全部',q:'可辨識客戶資料備查簿應保留幾年？',opts:['3年','5年','7年','10年'],ans:2,exp:'備查簿自資料銷毀日起算至少保留7年。'},
+  {dept:'資訊安全部',q:'雲端服務提供者需通過下列哪項認證？',opts:['ISO 9001','ISO 27001','ISO 27017','ISO 14001'],ans:2,exp:'須通過ISO 27017雲服務資安管理、ISO 27018及CSA STAR認證。'},
+  {dept:'資訊安全部',q:'資安設備第1級效能要求，CPU使用率應保持多少以下？',opts:['60%','70%','80%','90%'],ans:1,exp:'第1級：CPU或記憶體、磁碟空間、頻寬使用率保持70%以下。'},
+  {dept:'資訊安全部',q:'按月統計之資安指標連續幾期未達標應執行矯正措施？',opts:['二期','三期','四期','五期'],ans:1,exp:'連續三期未達目標值者應執行矯正措施。'},
+  // 資訊作業服務部
+  {dept:'資訊作業服務部',q:'密碼長度至少應為幾個字元？',opts:['6個','8個','10個','12個'],ans:3,exp:'依SR-029第3條，密碼長度至少12個字元。'},
+  {dept:'資訊作業服務部',q:'密碼變更週期最長不逾幾天？',opts:['30天','60天','90天','120天'],ans:2,exp:'密碼變更週期最長不逾90天或13週。'},
+  {dept:'資訊作業服務部',q:'密碼輸入錯誤幾次帳號將被停用？',opts:['3次','5次','7次','10次'],ans:1,exp:'連續達5次時將該帳號設為停止使用。'},
+  {dept:'資訊作業服務部',q:'機房溫度應保持在幾度之間？',opts:['14~22°C','16~25°C','18~28°C','20~30°C'],ans:1,exp:'依SR-037第17條，溫度保持16~25°C。'},
+  {dept:'資訊作業服務部',q:'機房錄影資料至少保存幾個月？',opts:['一個月','二個月','三個月','六個月'],ans:2,exp:'影像資料儲存媒體依日期保存至少三個月備查。'},
+  {dept:'資訊作業服務部',q:'最高權限帳號操作錄影每日抽檢幾件？',opts:['5件','10件','15件','20件'],ans:1,exp:'每一營業日應抽檢10件操作錄影。'},
+  {dept:'資訊作業服務部',q:'網域特權帳號密碼每幾個月變更一次？',opts:['一個月','二個月','三個月','六個月'],ans:2,exp:'每三個月變更乙次。'},
+  {dept:'資訊作業服務部',q:'監控巡檢中CPU使用率警戒值為？',opts:['70%','80%','85%','90%'],ans:3,exp:'依SW-013，CPU/記憶體警戒值為90%。'},
+  {dept:'資訊作業服務部',q:'監控巡檢中磁碟使用率警戒值為？',opts:['70%','80%','85%','90%'],ans:1,exp:'依SW-013，磁碟警戒值為80%。'},
+  {dept:'資訊作業服務部',q:'金融卡廢卡累計幾張時應辦理銷毀？',opts:['一千張','二千張','三千張','五千張'],ans:1,exp:'每隔二年或累計張數達二千張時辦理銷毀。'},
+  {dept:'資訊作業服務部',q:'物聯網設備密碼長度不應少於幾位？',opts:['4位','6位','8位','12位'],ans:1,exp:'依SR-060第6條，密碼長度不應少於六位。'},
+  // 資訊規劃開發部
+  {dept:'資訊規劃開發部',q:'專案時程小於幾人日可逕予辦理？',opts:['一百人日','二百人日','三百人日','五百人日'],ans:1,exp:'小於二百人日者得逕予辦理。'},
+  {dept:'資訊規劃開發部',q:'各項專案應用程式應由幾人以上撰寫？',opts:['一人','二人','三人','四人'],ans:1,exp:'依SR-010第9條，應分別交付二人以上程式員撰寫。'},
+  {dept:'資訊規劃開發部',q:'業務應用系統使用者權限至少多久清查一次？',opts:['每月','每季','每半年','每年'],ans:2,exp:'依系統使用者權限管理要點第6條，業務應用系統至少每半年一次。'},
+  {dept:'資訊規劃開發部',q:'一般變更案件由什麼層級核可？',opts:['科主管','單位副主管以上','單位主管','資訊安全長'],ans:1,exp:'依SR-013第23條，一般變更由單位副主管以上職級核可。'},
+  {dept:'資訊規劃開發部',q:'軟體品質管理測試分為幾級？',opts:['一級','二級','三級','四級'],ans:1,exp:'依SR-030第3條，分為第一級和第二級。'},
+  {dept:'資訊規劃開發部',q:'系統使用者權限管理要點經何人核定？',opts:['總經理','副總經理','董事長','董事會'],ans:2,exp:'依第9條，經董事長核定後實施。'},
+  {dept:'資訊規劃開發部',q:'外包室網路可連接下列哪種環境？',opts:['正式環境','測試環境','開發環境','網際網路'],ans:1,exp:'依SR-024，外包室僅可申請連接測試環境網段。'},
+  {dept:'資訊規劃開發部',q:'農曆春節前幾個月起禁止營運環境變更？',opts:['半個月','一個月','二個月','三個月'],ans:1,exp:'依SR-013第29條，假期始日前一個月起禁止。'},
+  // ===== 擴充題庫 =====
+  // 行政管理部 追加
+  {dept:'行政管理部',q:'宿舍管理及使用須知經何層級核定後實施？',opts:['資訊作業服務部主管','行政管理群群主管','總經理','董事長'],ans:1,exp:'依第16條，經行政管理群群主管核定後實施。'},
+  {dept:'行政管理部',q:'宿舍申請書屬於哪個附錄？',opts:['附錄一','附錄二','附錄三','附錄四'],ans:0,exp:'申請書為附錄一，延長為附錄二，遷出為附錄三。'},
+  {dept:'行政管理部',q:'延長住宿申請書屬於哪個附錄？',opts:['附錄一','附錄二','附錄三','附錄四'],ans:1,exp:'延長住宿申請書為附錄二。'},
+  {dept:'行政管理部',q:'配住順序中，何者為第一優先？',opts:['申請日期最早者','新任行員','主管級以上人員','設籍最遠者'],ans:2,exp:'依第4條，主管級以上人員得優先配住。'},
+  {dept:'行政管理部',q:'宿舍門禁使用何種方式管制？',opts:['鑰匙','密碼鎖','員工識別證感應','指紋辨識'],ans:2,exp:'依第7條，住宿行員應持員工識別證感應進出。'},
+  {dept:'行政管理部',q:'遇火警時應撥打哪個電話？',opts:['110','112','119','199'],ans:2,exp:'依第12條，火警應立即向119火警台報案。'},
+  {dept:'行政管理部',q:'宿舍飲用水應在何處取用？',opts:['個人房間','公共區域','指定茶水間','餐廳'],ans:2,exp:'依第10條，飲用水應在指定茶水間取用。'},
+  {dept:'行政管理部',q:'颱風時公用場所門窗安全由誰負責？',opts:['住宿行員自行處理','行政管理部','大樓管理中心','資訊作業服務部'],ans:2,exp:'依第12條，公用場所門窗及電氣設備安全由大樓管理中心負責。'},
+  // 人力資源部 追加
+  {dept:'人力資源部',q:'工作規則第17條第18款，員工間借貸經何程序可例外？',opts:['經董事長核准','經總經理核准','因正當用途經單位主管報備','經人力資源部同意'],ans:2,exp:'因正當用途發生員工間金錢借貸，經向單位主管報備者不在此限。'},
+  {dept:'人力資源部',q:'工作規則第17條第7款規定何種情形應迴避？',opts:['與客戶有金錢往來','涉及本身或家族利害事件','上班時間忙於外務','與同事間有借貸'],ans:1,exp:'員工執行職務時，遇有涉及本身或其家族之利害事件，應行迴避。'},
+  {dept:'人力資源部',q:'本行的企業經營理念為何？',opts:['誠實、清廉、敬業','信賴、熱誠、創新','顧客至上、服務第一','穩健、效率、安全'],ans:1,exp:'貫徹本行信賴、熱誠、創新之企業經營理念。'},
+  {dept:'人力資源部',q:'員工平時考核要點依據工作規則第幾條訂定？',opts:['第17條','第38條','第42條','第56條'],ans:1,exp:'依考核要點第1條，爰依據本行工作規則第38條訂定。'},
+  {dept:'人力資源部',q:'直屬主管應依何表格每月查察屬員？',opts:['員工行為承諾書','宣導會議紀錄表','員工平時考核檢視表','人事業務月報表'],ans:2,exp:'依第7條，各單位各級主管應每月填寫員工平時考核檢視表。'},
+  {dept:'人力資源部',q:'員工調離單位時，考核紀錄應如何處理？',opts:['直接銷毀','密封寄送新服務單位主管','交由人力資源部統一保管','留存原單位'],ans:1,exp:'依第12條，歷年考核紀錄資料應密封寄送新服務單位主管參考。'},
+  {dept:'人力資源部',q:'宣導會議紀錄表應由誰留存備查？',opts:['單位經理','人事管理員','人力資源部','行政管理部'],ans:1,exp:'請全體同仁於紀錄表簽名後由人事管理員留存備查。'},
+  {dept:'人力資源部',q:'函文宣導應於文到幾週內完成？',opts:['三天','一週','二週','一個月'],ans:1,exp:'各單位於文到一週內，由單位經理於內部會議向全體同仁宣導。'},
+  {dept:'人力資源部',q:'本行薪資制度採用何種方式？',opts:['公開制','密薪制','績效制','階梯制'],ans:1,exp:'依薪資管理要點第8條，本行薪資採密薪制。'},
+  {dept:'人力資源部',q:'違反加班規定者，經營績效考核「差勤管理」最高扣幾分？',opts:['5分','8分','10分','15分'],ans:2,exp:'依114年7月31日函，當年度經營績效考核「差勤管理」項下最高扣10分。'},
+  {dept:'人力資源部',q:'員工行為承諾書新增哪些條款？',opts:['即時關懷訪談與智慧財產權','資訊安全與密碼管理','防制洗錢與隱私保護','風險管理與合規'],ans:0,exp:'修正新增即時關懷訪談、智慧財產權條款、常見違規行為與刑事責任。'},
+  {dept:'人力資源部',q:'侵占挪用公款經認定情節重大者，懲處為何？',opts:['記過一次','記大過一次','記大過二次免職','降級處分'],ans:2,exp:'依工作規則第42條，記大過二次免職。'},
+  {dept:'人力資源部',q:'員工行為承諾書簽署對象不含下列何者？',opts:['正式員工','臨時人員','留職停薪復職人員','海外分行當地雇員'],ans:3,exp:'全體員工及臨時人員，不含海外分行當地雇員。'},
+  {dept:'人力資源部',q:'113年5月16日函文重申禁止何種行為？',opts:['使用他人帳號密碼','以華銀支付代客戶繳稅','與客戶約定特定利益','命行員登入員工網站'],ans:1,exp:'禁止因業務推展以華銀支付綁定帳戶或信用卡代客戶繳納稅費。'},
+  {dept:'人力資源部',q:'上級指示明知違反法令行規者，員工應如何？',opts:['仍應服從','得拒絕服從','先執行再報告','請求書面指示'],ans:1,exp:'依第17條第9款，明知有違反法令行規者，不在服從義務之限。'},
+  // 資訊安全部 追加
+  {dept:'資訊安全部',q:'資訊安全推動小組會議於哪兩個月召開？',opts:['三月和九月','一月和七月','四月和十月','六月和十二月'],ans:1,exp:'於一月、七月舉行，一年合計召開二次。'},
+  {dept:'資訊安全部',q:'資訊安全自行查核結果分為幾項等級？',opts:['二項','三項','四項','五項'],ans:2,exp:'分為完全符合、建議事項、次要缺失、主要缺失等四項。'},
+  {dept:'資訊安全部',q:'資訊安全管理制度實施注意事項（SR-001）經何層級核定？',opts:['董事會','總經理','資訊管理群群主管','資訊安全部部主管'],ans:1,exp:'SR-001經總經理核定後實施。'},
+  {dept:'資訊安全部',q:'PDCA循環中，C代表什麼？',opts:['Create建立','Control控制','Check監督與查核','Change變更'],ans:2,exp:'PDCA：Plan規劃、Do實施、Check監督與查核、Act維護與改進。'},
+  {dept:'資訊安全部',q:'資訊安全組織下設哪三個分組？',opts:['規劃/執行/查核','執行/緊急處理/查核','規劃/監控/處理','開發/測試/維運'],ans:1,exp:'下設資訊安全執行分組、緊急處理分組、資訊安全查核分組。'},
+  {dept:'資訊安全部',q:'紀錄銷毀應以何種方式處理？',opts:['直接丟棄','以碎紙機絞碎或撕毀','交由資源回收','焚燒處理'],ans:1,exp:'以碎紙機絞碎或撕毀等無法回復之安全方式處理。'},
+  {dept:'資訊安全部',q:'資訊人員離調職時應填寫什麼？',opts:['資訊作業需求申請單','員工離調職移交清單','系統資源使用者申請單','變更申請單'],ans:1,exp:'依SR-008第5條，應填寫「員工離(調)職移交清單」。'},
+  {dept:'資訊安全部',q:'資訊安全教育訓練內容應包含下列何者？',opts:['僅資安法令規定','僅資安技術','僅資安事件案例','以上皆應包含'],ans:3,exp:'應包含ISMS規範、法令規定、資安事件案例宣導、資安技術、雲端服務資安宣導。'},
+  {dept:'資訊安全部',q:'海外分行弱點掃描結果應於幾個月內完成修補？',opts:['一個月','二個月','三個月','六個月'],ans:2,exp:'應於三個月內完成風險評估及必要之修補與複測。'},
+  {dept:'資訊安全部',q:'海外分行備援演練完成後幾個月內陳報總行？',opts:['一週內','二週內','一個月內','三個月內'],ans:2,exp:'備援演練完成後於一個月內將演練情形陳報總行。'},
+  {dept:'資訊安全部',q:'海外分行每半年執行備援演練，年度內應含哪兩種？',opts:['全面與局部','同地與異地','模擬與實況','軟體與硬體'],ans:1,exp:'年度內一次同地備援演練，一次異地備援演練。'},
+  {dept:'資訊安全部',q:'國外分行防火牆操作紀錄至少保存幾年？',opts:['一年','三年','五年','七年'],ans:2,exp:'防火牆操作紀錄及連線紀錄至少須保存五年。'},
+  {dept:'資訊安全部',q:'SWIFT電文作業電腦有何限制？',opts:['限使用加密連線','不能使用電子郵件','須安裝防毒軟體','須每日備份'],ans:1,exp:'SWIFT電文作業以使用與外部網路隔離之獨立電腦為原則，不能使用電子郵件。'},
+  {dept:'資訊安全部',q:'防毒軟體病毒定義檔應確認為最近幾天內？',opts:['三天','五天','七天','十四天'],ans:2,exp:'查看定義檔日期是否為最近七天內。'},
+  {dept:'資訊安全部',q:'觸發病毒告警後，ANTIVIR01報表應由誰決行？',opts:['科主管','副主管','單位主管','經理'],ans:2,exp:'設定單位主管為決行人員。'},
+  {dept:'資訊安全部',q:'重大資訊安全事件的定義包含下列何者？',opts:['一般等級資料洩漏','關鍵作業可於RTO內回復','機密等級資料遭洩漏或竄改','內部限閱資料遭洩漏'],ans:2,exp:'重大事件：機密等級資料遭洩漏/竄改，或關鍵資訊作業無法於RTO內回復。'},
+  {dept:'資訊安全部',q:'證券期貨市場資通安全事件初步通報應於知悉後多久內辦理？',opts:['15分鐘','30分鐘','60分鐘','2小時'],ans:1,exp:'應於本行知悉事件30分鐘內至通報系統辦理事件初步通報。'},
+  {dept:'資訊安全部',q:'電子郵件經常性業務放行申請期限以多久為限？',opts:['三個月','半年','一年','二年'],ans:1,exp:'期限以半年為限，屆期應重新評估再行申請。'},
+  {dept:'資訊安全部',q:'DLP機制有效性應由資安部多久召開會議檢視？',opts:['每季','每半年','每年','每二年'],ans:2,exp:'DLP機制之有效性應由資訊安全部每年召開會議檢視。'},
+  {dept:'資訊安全部',q:'雲端服務注意事項每年至少檢視幾次？',opts:['不需檢視','一次','二次','四次'],ans:1,exp:'本注意事項每年至少檢視一次。'},
+  {dept:'資訊安全部',q:'客戶資料儲存於境外時，境外資料保護法規有何要求？',opts:['需與我國相同','不得低於我國要求','無特別要求','需高於我國標準'],ans:1,exp:'境外當地資料保護法規不得低於我國要求。'},
+  {dept:'資訊安全部',q:'資安設備效能量測標準為每日峰值達當月多少工作日？',opts:['二分之一','三分之二','四分之三','全部'],ans:1,exp:'量測標準為每日峰值達當月三分之二工作日以上。'},
+  {dept:'資訊安全部',q:'資安設備汰換評估應多久執行一次？',opts:['每季','每半年','每年','每二年'],ans:2,exp:'每年應依本細項執行汰換設備評估一次。'},
+  {dept:'資訊安全部',q:'資安監控日班時段為？',opts:['07:00~15:00','08:00~16:00','08:50~17:00','09:00~18:00'],ans:2,exp:'營業日常日班為上午八時五十分至下午五時。'},
+  {dept:'資訊安全部',q:'資安威脅情資中Zero Day事件應由誰召開因應會議？',opts:['科主管','資訊安全部副主管','資訊安全部經理','副總經理'],ans:1,exp:'Zero Day事件需先通知科主管並由資訊安全部副主管召開因應會議。'},
+  {dept:'資訊安全部',q:'第二類系統高風險弱點應於幾個營業日內修補？',opts:['20日','30日','45日','60日'],ans:1,exp:'第二類系統30個營業日內完成修補。'},
+  {dept:'資訊安全部',q:'第三類系統高風險弱點應於幾個營業日內修補？',opts:['20日','30日','45日','60日'],ans:2,exp:'第三類系統45個營業日內完成修補。'},
+  // 資訊作業服務部 追加
+  {dept:'資訊作業服務部',q:'BIA營運衝擊分析由哪個單位每半年執行一次？',opts:['資訊安全部','資訊規劃開發部','資訊作業服務部','風險管理部'],ans:2,exp:'依SR-003第4條，資訊作業服務部每半年執行一次。'},
+  {dept:'資訊作業服務部',q:'RTO的中文全名為何？',opts:['最大可容忍中斷時間','復原時間目標','資料回復時點目標','營運衝擊分析'],ans:1,exp:'RTO = Recovery Time Objective 復原時間目標。'},
+  {dept:'資訊作業服務部',q:'RPO的中文全名為何？',opts:['最大可容忍中斷時間','復原時間目標','資料回復時點目標','營運衝擊分析'],ans:2,exp:'RPO = Recovery Point Objective 資料回復時點目標。'},
+  {dept:'資訊作業服務部',q:'MTPD的中文全名為何？',opts:['最大可容忍中斷時間','復原時間目標','資料回復時點目標','最小可接受服務水準'],ans:0,exp:'MTPD = Maximum Tolerable Period of Disruption 最大可容忍中斷時間。'},
+  {dept:'資訊作業服務部',q:'SR-003中，第三類電腦系統的定義為何？',opts:['直接提供客戶自動化服務','經人工介入間接服務','未接觸客戶資訊且對營運無影響','以上皆非'],ans:2,exp:'第三類：未接觸客戶資訊或服務且對營運無影響之系統或設備。'},
+  {dept:'資訊作業服務部',q:'下列何者屬於第一類電腦系統？',opts:['人事系統','財會系統','ATM自動化服務','客戶服務系統'],ans:2,exp:'第一類包含電子銀行、分行櫃台、ATM、SWIFT等直接提供客戶自動化服務之系統。'},
+  {dept:'資訊作業服務部',q:'密碼歷程紀錄至少前幾代不重複？',opts:['2代','3代','5代','8代'],ans:1,exp:'依SR-029第4條，使用密碼歷程紀錄至少前3代不重複。'},
+  {dept:'資訊作業服務部',q:'密碼最短使用期限為幾天？',opts:['1天','3天','5天','7天'],ans:2,exp:'依SR-029第4條，密碼最短使用期限至少為5天。'},
+  {dept:'資訊作業服務部',q:'最高權限帳號正式環境使用開始時間為？',opts:['上午九時','上午十時','下午一時','下午三時'],ans:2,exp:'正式環境使用時間以營業日下午一時起至翌日零時止為原則。'},
+  {dept:'資訊作業服務部',q:'最高權限帳號操作錄影備份至少保留幾年？',opts:['一年','三年','五年','七年'],ans:2,exp:'操作行為錄影留存稽核軌跡紀錄並定期備份，備份資料應保留至少五年。'},
+  {dept:'資訊作業服務部',q:'機房相對濕度應保持在什麼範圍？',opts:['30%~60%','40%~70%','50%~80%','20%~50%'],ans:1,exp:'依SR-037第17條，相對濕度保持百分之四十至百分之七十之間。'},
+  {dept:'資訊作業服務部',q:'機房滅火藥劑選擇原則為何？',opts:['以成本最低為原則','以撲滅速度最快為原則','以對設備損害最小為原則','以涵蓋範圍最廣為原則'],ans:2,exp:'滅火藥劑之選擇應以對資訊電腦設備造成之損害最小為原則。'},
+  {dept:'資訊作業服務部',q:'機房設備報廢前應清除什麼等級以上的資料？',opts:['一般等級','限制等級','限閱等級','機密等級'],ans:2,exp:'依SR-037第26條，應確實清除機器內部限閱等級以上之資料。'},
+  {dept:'資訊作業服務部',q:'使用者閒置超過幾分鐘應強制自動登出？',opts:['5分鐘','10分鐘','15分鐘','30分鐘'],ans:2,exp:'使用者登入後若閒置時間超過15分鐘，應強制自動登出。'},
+  {dept:'資訊作業服務部',q:'程式維護人員營業日上班前權限如何處理？',opts:['自動開放','由RACF人員REVOKE','由主管手動開放','無須處理'],ans:1,exp:'營業日上班前RACF人員將正式環境所有程式維護人員使用者代號REVOKE。'},
+  {dept:'資訊作業服務部',q:'LD01報表決行人員為何職級？',opts:['科主管','單位副主管以上','單位主管','經理'],ans:1,exp:'LD01報表決行人員為「單位副主管」以上。'},
+  {dept:'資訊作業服務部',q:'金融卡廢卡銷毀需經何人核准？',opts:['科主管','經理','副總經理','總經理'],ans:2,exp:'簽報副總經理核准後，由駐行稽核會同銷毀。'},
+  {dept:'資訊作業服務部',q:'金融卡廢卡每隔幾年應辦理銷毀？',opts:['一年','二年','三年','五年'],ans:1,exp:'每隔二年或累計張數達二千張時辦理銷毀。'},
+  {dept:'資訊作業服務部',q:'端末電腦設備硬碟銷毀流程的正確順序為何？',opts:['物理破壞→消磁→實體銷毀','消磁→物理破壞→實體銷毀','實體銷毀→消磁→物理破壞','消磁→實體銷毀→物理破壞'],ans:1,exp:'處理方式：消磁→物理破壞→委由合格環保廠商辦理實體銷毀作業。'},
+  {dept:'資訊作業服務部',q:'報廢硬碟應裝入哪兩種袋子？',opts:['塑膠袋和紙袋','格紋袋Y-003和密封袋Y-005','防靜電袋和氣泡袋','鋁箔袋和夾鏈袋'],ans:1,exp:'裝入專用格紋袋(Y-003)及專用密封袋(Y-005)。'},
+  {dept:'資訊作業服務部',q:'監控巡檢中網路頻寬使用率警戒值為？',opts:['70%','80%','85%','90%'],ans:2,exp:'依SW-013，頻寬使用率警戒值為85%。'},
+  {dept:'資訊作業服務部',q:'緊急事故處置小組中，事故通報組負責單位為？',opts:['資訊規劃開發部','資訊安全部','資訊作業服務部副主管及資訊服務科','連線管理科'],ans:2,exp:'事故通報組負責單位為資訊作業服務部副主管及資訊服務科主管。'},
+  {dept:'資訊作業服務部',q:'資訊作業演練得採行的方式不包含下列何者？',opts:['書面模擬演練','資料復原模擬演練','情境模擬演練','社交工程演練'],ans:3,exp:'演練方式包含書面模擬、資料復原模擬、情境模擬及實況演練，社交工程屬資安部。'},
+  {dept:'資訊作業服務部',q:'SR-003資訊作業營運持續管理注意事項經何層級核定？',opts:['資訊管理群群主管','資訊安全長','總經理','董事會'],ans:2,exp:'SR-003經總經理核定後實施。'},
+  {dept:'資訊作業服務部',q:'IMS資料庫屬於哪種類型？',opts:['關聯式','階層式','網狀式','物件導向式'],ans:1,exp:'IMS為連線交易系統，屬於階層式資料庫。'},
+  {dept:'資訊作業服務部',q:'異地備援主機設置於何處？',opts:['台北主中心','中壢第二資訊中心','高雄備援中心','新竹機房'],ans:1,exp:'異地備援主機設置於中壢第二資訊中心。'},
+  // 資訊規劃開發部 追加
+  {dept:'資訊規劃開發部',q:'可行性分析報告內容至少應包含幾個項目？',opts:['4項','5項','6項','8項'],ans:2,exp:'至少包含：專案範圍與成本效益、時程、技術架構、自行或委外建議、預估人力、綜合評估，共6項。'},
+  {dept:'資訊規劃開發部',q:'需求分析完成後應召開什麼會議？',opts:['變更管理會議','上線協調會議','使用者確認會議','專案啟動會議'],ans:2,exp:'應邀集使用單位及總行相關部門召開「使用者確認會議」。'},
+  {dept:'資訊規劃開發部',q:'依敏捷工作執行注意事項辦理者，可免召開什麼會議？',opts:['變更管理會議','上線協調會議','使用者確認會議','專案檢討會議'],ans:2,exp:'依「敏捷工作執行注意事項」辦理之資訊開發事宜，免召開「使用者確認會議」。'},
+  {dept:'資訊規劃開發部',q:'驗收文件應製成幾份供同異地存放？',opts:['一份','二份','三份','四份'],ans:1,exp:'文件須製成兩份供同異地存放。'},
+  {dept:'資訊規劃開發部',q:'廠商開發之程式碼若使用Email收送時需如何處理？',opts:['無限制','經加密處理','經主管核准','經法遵部同意'],ans:1,exp:'依第28條，使用Email收送時需經加密處理。'},
+  {dept:'資訊規劃開發部',q:'重要變更案件須先召開什麼會議進行審核？',opts:['上線協調會議','專案工作會議','變更管理會議','使用者確認會議'],ans:2,exp:'重要變更案件須先申請召開「變更管理會議」進行技術及業務審核。'},
+  {dept:'資訊規劃開發部',q:'上線協調會議召開時點應在何時？',opts:['變更管理會議之前','變更管理會議後至正式上線前','正式上線當日','上線後一週內'],ans:1,exp:'上線協調會議召開時點須介於變更管理會議後至正式上線或實施前。'},
+  {dept:'資訊規劃開發部',q:'涉及第12條第6款重要變更，變更管理會議由誰主持？',opts:['資訊作業服務部部主管','資訊規劃開發部經理','資訊安全長','總經理'],ans:2,exp:'涉及核心/一類系統重大變更，應由資訊安全長主持。'},
+  {dept:'資訊規劃開發部',q:'資訊系統清查及更新系統清單，由誰負責？',opts:['資訊安全部','資訊作業服務部','資訊規劃開發部','風險管理部'],ans:2,exp:'依使用者權限管理要點第6條，資訊規劃開發部應每半年清查及更新系統清單。'},
+  {dept:'資訊規劃開發部',q:'資訊系統使用者權限清查作業由誰啟動？',opts:['資訊安全部','資訊作業服務部','資訊規劃開發部','業管部門'],ans:1,exp:'依要點第6條，資訊作業服務部應啟動系統使用者權限清查作業。'},
+  {dept:'資訊規劃開發部',q:'外包人員出入證應設定什麼管制？',opts:['時間管制','網路管制','電梯樓層管制','通話管制'],ans:2,exp:'出入證應設定電梯樓層管制，僅得進出外包室及餐廳樓層。'},
+  {dept:'資訊規劃開發部',q:'外包人員進入本行時應繳交什麼換取出入證？',opts:['員工識別證','駕照','身分證件','護照'],ans:2,exp:'應於保全服務台繳交身分證件換取出入證。'},
+  {dept:'資訊規劃開發部',q:'外包人員假日來行時需在幾本簿冊登記？',opts:['一本','二本','三本','不需登記'],ans:1,exp:'假日或下班時段應同時於「訪客登記簿」及「廠商簽到簽退登記簿」登記。'},
+  {dept:'資訊規劃開發部',q:'SR-030軟體品質管理中，第二級測試適用何種情況？',opts:['需求變動造成功能改變','瑕疵改善','系統提升或架構改變','畫面變動'],ans:2,exp:'第二級適用系統提升、架構改變造成之軟硬體變動。'},
+  {dept:'資訊規劃開發部',q:'APP委外開發且未取得原始碼者，發布前須做什麼？',opts:['無須特別處理','使用本行防毒軟體掃描','經董事會核准','經金管會核准'],ans:1,exp:'應於發布前使用本行防毒軟體掃描並確認無病毒。'},
+  {dept:'資訊規劃開發部',q:'專案會議紀錄應至少每多久彙整一次？',opts:['每月','每二個月','每季','每半年'],ans:1,exp:'專案經理應至少每二個月彙整一次專案會議之會議紀錄。'},
+  {dept:'資訊規劃開發部',q:'報廢計畫至少應包含幾個項目？',opts:['3項','4項','5項','6項'],ans:2,exp:'報廢計畫至少包含：報廢目的、對象範圍、日期、方法、會計帳資產處分方法，共5項。'}
+];
+
+// ====== RENDER SIDEBAR ======
+function renderSidebar(){
+  const sb=document.getElementById('sidebar');
+  let h='<div class="search-box"><input type="text" id="searchInput" placeholder="🔍 搜尋關鍵字..." oninput="doSearch(this.value)"></div>';
+  departments.forEach((d,di)=>{
+    h+=`<div class="nav-group"><div class="nav-dept" onclick="toggleNav(this,${di})"><span class="arrow">▶</span>${d.icon} ${d.name}<span class="badge">${d.sections.length}</span></div><div class="nav-items" id="nav-${di}">`;
+    d.sections.forEach((s,si)=>{
+      h+=`<div class="nav-item" onclick="scrollToSection(${di},${si})">${s.t.replace(/⭐/g,'')}</div>`;
+    });
+    h+=`</div></div>`;
+  });
+  sb.innerHTML=h;
+}
+
+// ====== RENDER READING ======
+function renderReading(){
+  const m=document.getElementById('readPanel');
+  let h='';
+  departments.forEach((d,di)=>{
+    h+=`<div class="dept-header" id="dept-${di}"><div class="dept-icon">${d.icon}</div><div><h1>${d.name}</h1><p>考試重點整理</p></div></div>`;
+    d.sections.forEach((s,si)=>{
+      h+=`<div class="section" id="sec-${di}-${si}"><h2>${s.t}</h2>${s.html}</div>`;
+    });
+    h+='<hr style="border-color:var(--border);margin:48px 0">';
+  });
+  m.innerHTML=h;
+}
+
+// ====== RENDER QUIZ ======
+let quizState={dept:'all',questions:[],current:0,score:0,answered:0,revealed:[]};
+
+function renderQuizPanel(){
+  const p=document.getElementById('quizPanel');
+  let opts='<option value="all">全部部門</option>';
+  departments.forEach(d=>opts+=`<option value="${d.name}">${d.icon} ${d.name}</option>`);
+  p.innerHTML=`
+    <div class="quiz-controls">
+      <select id="quizDept" onchange="startQuiz()">${opts}</select>
+      <button onclick="startQuiz()">🔄 重新出題</button>
+      <span class="score" id="quizScore"></span>
+    </div>
+    <div id="quizCards"></div>
+    <div class="quiz-summary" id="quizSummary"></div>`;
+  startQuiz();
+}
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startQuiz(){
+  const dept=document.getElementById('quizDept').value;
+  let pool=dept==='all'?[...quizBank]:quizBank.filter(q=>q.dept===dept);
+  pool=shuffle(pool).slice(0,Math.min(20,pool.length));
+  quizState={dept,questions:pool,current:0,score:0,answered:0,revealed:[]};
+  document.getElementById('quizSummary').style.display='none';
+  renderQuizCards();
+  updateScore();
+}
+
+function renderQuizCards(){
+  const c=document.getElementById('quizCards');
+  let h='';
+  quizState.questions.forEach((q,qi)=>{
+    h+=`<div class="quiz-card" id="qcard-${qi}"><div class="q-num">第 ${qi+1} 題</div><div class="q-dept">${q.dept}</div><div class="q-text">${q.q}</div>`;
+    const labels=['A','B','C','D'];
+    q.opts.forEach((o,oi)=>{
+      h+=`<div class="quiz-option" id="qopt-${qi}-${oi}" onclick="selectAnswer(${qi},${oi})"><span class="opt-label">${labels[oi]}</span>${o}</div>`;
+    });
+    h+=`<div class="quiz-explain" id="qexp-${qi}">💡 ${q.exp}</div></div>`;
+  });
+  c.innerHTML=h;
+}
+
+function selectAnswer(qi,oi){
+  if(quizState.revealed[qi])return;
+  quizState.revealed[qi]=true;
+  quizState.answered++;
+  const q=quizState.questions[qi];
+  const correct=q.ans;
+  document.getElementById(`qopt-${qi}-${oi}`).classList.add(oi===correct?'correct':'wrong');
+  if(oi===correct)quizState.score++;
+  else document.getElementById(`qopt-${qi}-${correct}`).classList.add('correct');
+  document.getElementById(`qexp-${qi}`).classList.add('show');
+  updateScore();
+  if(quizState.answered===quizState.questions.length)showSummary();
+}
+
+function updateScore(){
+  const total=quizState.questions.length;
+  document.getElementById('quizScore').textContent=`得分：${quizState.score} / ${quizState.answered}（共${total}題）`;
+}
+
+function showSummary(){
+  const s=document.getElementById('quizSummary');
+  const total=quizState.questions.length;
+  const pct=Math.round(quizState.score/total*100);
+  s.style.display='block';
+  s.innerHTML=`<h2>測驗完成！</h2><div class="big-score">${pct}%</div><p>答對 ${quizState.score} / ${total} 題</p><p style="margin-top:16px"><button onclick="startQuiz()" style="padding:12px 32px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-family:inherit;font-weight:700">再測一次</button></p>`;
+  s.scrollIntoView({behavior:'smooth'});
+}
+
+// ====== NAV FUNCTIONS ======
+function toggleNav(el,di){
+  el.classList.toggle('open');
+  document.getElementById(`nav-${di}`).classList.toggle('show');
+}
+function scrollToSection(di,si){
+  switchTab('read');
+  const el=document.getElementById(`sec-${di}-${si}`);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+  if(window.innerWidth<=768)toggleSidebar();
+}
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===(tab==='read'?0:1)));
+  document.getElementById('readPanel').style.display=tab==='read'?'block':'none';
+  document.getElementById('quizPanel').style.display=tab==='quiz'?'block':'none';
+}
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.querySelector('.overlay').classList.toggle('show');
+}
+function doSearch(val){
+  const v=val.trim().toLowerCase();
+  document.querySelectorAll('.section').forEach(sec=>{
+    sec.style.display=(!v||sec.textContent.toLowerCase().includes(v))?'block':'none';
+  });
+  document.querySelectorAll('.dept-header').forEach(dh=>{dh.style.display=v?'none':'flex';});
+}
+
+// ====== THEME ======
+function toggleTheme(){
+  const html=document.documentElement;
+  const isLight=html.getAttribute('data-theme')==='light';
+  html.setAttribute('data-theme',isLight?'dark':'light');
+  document.getElementById('themeBtn').textContent=isLight?'🌙':'☀️';
+  try{localStorage.setItem('theme',isLight?'dark':'light');}catch(e){}
+}
+(function(){try{const t=localStorage.getItem('theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');document.addEventListener('DOMContentLoaded',()=>{document.getElementById('themeBtn').textContent='☀️';});}}catch(e){}})();
+
+// ====== INIT ======
+renderSidebar();
+renderReading();
+renderQuizPanel();
+// Auto open first nav group
+document.querySelector('.nav-dept').click();
+</script>
+</body>
+</html>
