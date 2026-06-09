@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>115 資訊管理實務 考試重點</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
@@ -13,19 +13,19 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 a{color:var(--accent);text-decoration:none}
 
 /* HEADER */
-.header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;height:56px;gap:16px;transition:background .3s,border-color .3s}
-.header h1{font-size:18px;font-weight:700;white-space:nowrap}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;padding-top:env(safe-area-inset-top);height:calc(56px + env(safe-area-inset-top));gap:12px;transition:background .3s,border-color .3s}
+.header h1{font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
 .header h1 span{color:var(--accent);font-weight:900}
-.tab-bar{display:flex;gap:4px;margin-left:auto}
-.tab-btn{padding:8px 20px;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;transition:.2s}
+.tab-bar{display:flex;gap:4px;flex-shrink:0}
+.tab-btn{padding:8px 16px;border:none;background:transparent;color:var(--text2);cursor:pointer;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;transition:.2s;white-space:nowrap}
 .tab-btn.active{background:var(--accent);color:#fff}
 .tab-btn:hover:not(.active){background:var(--card)}
-.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
-.theme-toggle{background:none;border:1px solid var(--border);color:var(--text);font-size:18px;cursor:pointer;border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;flex-shrink:0}
+.theme-toggle{background:none;border:1px solid var(--border);color:var(--text);font-size:16px;cursor:pointer;border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
 .theme-toggle:hover{background:var(--card);border-color:var(--accent)}
 
 /* SIDEBAR */
-.sidebar{position:fixed;top:56px;left:0;bottom:0;width:280px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:16px 0;z-index:90;transition:transform .3s,background .3s}
+.sidebar{position:fixed;top:calc(56px + env(safe-area-inset-top));left:0;bottom:0;width:280px;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:16px 0;z-index:90;transition:transform .3s,background .3s}
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 .nav-group{margin-bottom:4px}
@@ -46,7 +46,7 @@ a{color:var(--accent);text-decoration:none}
 .search-box input::placeholder{color:var(--text2)}
 
 /* MAIN */
-.main{margin-left:280px;margin-top:56px;padding:32px 40px 80px;max-width:900px}
+.main{margin-left:280px;margin-top:calc(56px + env(safe-area-inset-top));padding:32px 40px 80px;max-width:900px}
 .main h2{font-size:22px;font-weight:900;margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--accent);color:var(--accent)}
 .main h3{font-size:17px;font-weight:700;margin:24px 0 10px;color:var(--text)}
 .main h4{font-size:15px;font-weight:700;margin:16px 0 8px;color:var(--text2)}
@@ -56,6 +56,7 @@ a{color:var(--accent);text-decoration:none}
 .main strong{color:var(--text);font-weight:700;background:var(--highlight);padding:0 3px;border-radius:3px}
 .main blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:12px 0;background:var(--highlight);border-radius:0 8px 8px 0;font-size:14px}
 .main table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+@media(max-width:768px){.main table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
 .main th{background:var(--card);padding:10px 12px;text-align:left;font-weight:700;border:1px solid var(--border);white-space:nowrap}
 .main td{padding:8px 12px;border:1px solid var(--border);vertical-align:top}
 .main tr:hover td{background:var(--highlight)}
@@ -66,42 +67,68 @@ a{color:var(--accent);text-decoration:none}
 .dept-header .dept-icon{font-size:36px}
 .dept-header h1{font-size:24px;font-weight:900}
 .dept-header p{color:var(--text2);font-size:13px;margin-top:4px}
-.section{scroll-margin-top:72px}
+.section{scroll-margin-top:calc(72px + env(safe-area-inset-top))}
 mark{background:var(--orange);color:#000;padding:1px 4px;border-radius:3px;font-weight:700}
 
 /* QUIZ */
-.quiz-panel{margin-left:280px;margin-top:56px;padding:32px 40px 80px;max-width:900px;display:none}
-.quiz-controls{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
-.quiz-controls select,.quiz-controls button{padding:10px 16px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;font-size:14px;font-family:inherit;cursor:pointer}
-.quiz-controls button{background:var(--accent);color:#fff;border:none;font-weight:700}
-.quiz-controls button:hover{opacity:.9}
-.quiz-controls .score{margin-left:auto;font-size:14px;color:var(--text2)}
-.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;transition:.2s}
-.quiz-card .q-num{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:8px}
-.quiz-card .q-dept{font-size:11px;color:var(--text2);margin-bottom:12px;background:var(--surface);display:inline-block;padding:2px 10px;border-radius:12px}
-.quiz-card .q-text{font-size:15px;font-weight:500;margin-bottom:16px;line-height:1.8}
-.quiz-option{display:block;padding:12px 16px;margin:6px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:.15s;font-size:14px}
-.quiz-option:hover{border-color:var(--accent);background:var(--highlight)}
-.quiz-option.selected{border-color:var(--accent);background:var(--highlight)}
-.quiz-option.correct{border-color:var(--green);background:#27ae6022;color:var(--green)}
-.quiz-option.wrong{border-color:var(--red);background:#e74c3c22;color:var(--red)}
+.quiz-panel{margin-left:280px;margin-top:calc(56px + env(safe-area-inset-top));padding:32px 40px 80px;max-width:900px;display:none}
+.quiz-top{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.quiz-top select,.quiz-top button{padding:10px 16px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;font-size:14px;font-family:inherit;cursor:pointer}
+.quiz-top button{background:var(--accent);color:#fff;border:none;font-weight:700}
+.quiz-top button:hover{opacity:.9}
+.quiz-progress{margin-bottom:24px}
+.quiz-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.quiz-progress-text{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-top:6px}
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:.2s}
+.quiz-card .q-num{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:6px}
+.quiz-card .q-dept{font-size:11px;color:var(--text2);margin-bottom:14px;background:var(--surface);display:inline-block;padding:2px 10px;border-radius:12px}
+.quiz-card .q-text{font-size:16px;font-weight:500;margin-bottom:20px;line-height:1.8}
+.quiz-option{display:block;padding:14px 16px;margin:8px 0;background:var(--surface);border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;font-size:14px}
+.quiz-option:hover:not(.correct):not(.wrong){border-color:var(--accent);background:var(--highlight)}
+.quiz-option.correct{border-color:var(--green);background:#16a34a18;cursor:default}
+.quiz-option.wrong{border-color:var(--red);background:#dc262618;cursor:default}
 .quiz-option .opt-label{font-weight:700;margin-right:8px}
-.quiz-explain{display:none;margin-top:12px;padding:12px 16px;background:var(--surface);border-radius:8px;font-size:13px;color:var(--text2);border-left:3px solid var(--green)}
+.quiz-explain{margin-top:16px;padding:14px 16px;background:var(--surface);border-radius:8px;font-size:13px;color:var(--text2);border-left:3px solid var(--green);display:none}
 .quiz-explain.show{display:block}
-.quiz-summary{background:var(--card);border-radius:12px;padding:32px;text-align:center;display:none}
-.quiz-summary h2{color:var(--accent);margin-bottom:16px}
-.quiz-summary .big-score{font-size:64px;font-weight:900;color:var(--green)}
-.quiz-summary p{color:var(--text2);margin:8px 0}
+.quiz-nav{display:flex;justify-content:center;margin-top:20px;gap:12px}
+.quiz-nav button{padding:12px 32px;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+.quiz-nav .btn-next{background:var(--accent);color:#fff}
+.quiz-nav .btn-next:hover{opacity:.85}
+.quiz-nav .btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.quiz-nav .btn-secondary:hover{border-color:var(--accent)}
+.quiz-summary{background:var(--card);border-radius:16px;padding:40px 32px;text-align:center}
+.quiz-summary h2{color:var(--accent);margin-bottom:8px;font-size:20px}
+.quiz-summary .big-score{font-size:72px;font-weight:900;margin:12px 0}
+.quiz-summary .big-score.pass{color:var(--green)}
+.quiz-summary .big-score.fail{color:var(--red)}
+.quiz-summary p{color:var(--text2);margin:6px 0;font-size:14px}
+.quiz-summary .btn-row{display:flex;justify-content:center;gap:12px;margin-top:24px;flex-wrap:wrap}
+.quiz-wrong-list{margin-top:24px;text-align:left}
+.quiz-wrong-list h3{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--red)}
+.quiz-wrong-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px;font-size:13px;line-height:1.7}
+.quiz-wrong-item .qw-q{font-weight:700;margin-bottom:6px}
+.quiz-wrong-item .qw-a{color:var(--green)}
 
 /* RESPONSIVE */
 @media(max-width:768px){
+  .header{padding:0 12px;padding-top:env(safe-area-inset-top);gap:8px}
+  .header h1{font-size:13px;min-width:0}
+  .tab-bar{gap:2px}
+  .tab-btn{padding:6px 10px;font-size:12px}
+  .theme-toggle{width:32px;height:32px;font-size:14px}
+  .menu-toggle{display:block}
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
-  .main,.quiz-panel{margin-left:0;padding:24px 16px 80px}
-  .menu-toggle{display:block}
-  .header h1{font-size:14px}
+  .main,.quiz-panel{margin-left:0;padding:20px 16px 80px;padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right))}
+  .section{scroll-margin-top:calc(72px + env(safe-area-inset-top))}
   .overlay{display:none;position:fixed;inset:0;background:#0008;z-index:85}
   .overlay.show{display:block}
+  .quiz-controls{flex-direction:column;align-items:stretch}
+  .quiz-controls .score{margin-left:0;text-align:center}
+  .quiz-top{flex-direction:column}
+  .quiz-card{padding:20px 16px}
+  .quiz-nav button{padding:12px 24px;font-size:14px}
 }
 </style>
 </head>
@@ -366,20 +393,18 @@ function renderReading(){
 }
 
 // ====== RENDER QUIZ ======
-let quizState={dept:'all',questions:[],current:0,score:0,answered:0,revealed:[]};
+let quizState={questions:[],current:0,score:0,answers:[],phase:'question'};
 
 function renderQuizPanel(){
   const p=document.getElementById('quizPanel');
   let opts='<option value="all">全部部門</option>';
   departments.forEach(d=>opts+=`<option value="${d.name}">${d.icon} ${d.name}</option>`);
   p.innerHTML=`
-    <div class="quiz-controls">
-      <select id="quizDept" onchange="startQuiz()">${opts}</select>
-      <button onclick="startQuiz()">🔄 重新出題</button>
-      <span class="score" id="quizScore"></span>
+    <div class="quiz-top">
+      <select id="quizDept">${opts}</select>
+      <button onclick="startQuiz()">🔄 開始測驗</button>
     </div>
-    <div id="quizCards"></div>
-    <div class="quiz-summary" id="quizSummary"></div>`;
+    <div id="quizArea"></div>`;
   startQuiz();
 }
 
@@ -389,52 +414,82 @@ function startQuiz(){
   const dept=document.getElementById('quizDept').value;
   let pool=dept==='all'?[...quizBank]:quizBank.filter(q=>q.dept===dept);
   pool=shuffle(pool).slice(0,Math.min(20,pool.length));
-  quizState={dept,questions:pool,current:0,score:0,answered:0,revealed:[]};
-  document.getElementById('quizSummary').style.display='none';
-  renderQuizCards();
-  updateScore();
+  quizState={questions:pool,current:0,score:0,answers:new Array(pool.length).fill(-1),phase:'question'};
+  showQuestion();
 }
 
-function renderQuizCards(){
-  const c=document.getElementById('quizCards');
-  let h='';
-  quizState.questions.forEach((q,qi)=>{
-    h+=`<div class="quiz-card" id="qcard-${qi}"><div class="q-num">第 ${qi+1} 題</div><div class="q-dept">${q.dept}</div><div class="q-text">${q.q}</div>`;
-    const labels=['A','B','C','D'];
-    q.opts.forEach((o,oi)=>{
-      h+=`<div class="quiz-option" id="qopt-${qi}-${oi}" onclick="selectAnswer(${qi},${oi})"><span class="opt-label">${labels[oi]}</span>${o}</div>`;
-    });
-    h+=`<div class="quiz-explain" id="qexp-${qi}">💡 ${q.exp}</div></div>`;
-  });
-  c.innerHTML=h;
-}
-
-function selectAnswer(qi,oi){
-  if(quizState.revealed[qi])return;
-  quizState.revealed[qi]=true;
-  quizState.answered++;
-  const q=quizState.questions[qi];
+function showQuestion(){
+  const{questions,current,score,answers}=quizState;
+  const total=questions.length;
+  const q=questions[current];
+  const answered=answers[current]>=0;
   const correct=q.ans;
-  document.getElementById(`qopt-${qi}-${oi}`).classList.add(oi===correct?'correct':'wrong');
-  if(oi===correct)quizState.score++;
-  else document.getElementById(`qopt-${qi}-${correct}`).classList.add('correct');
-  document.getElementById(`qexp-${qi}`).classList.add('show');
-  updateScore();
-  if(quizState.answered===quizState.questions.length)showSummary();
+  const picked=answers[current];
+  const labels=['A','B','C','D'];
+  const pct=Math.round((current+(answered?1:0))/total*100);
+
+  let h=`<div class="quiz-progress"><div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div><div class="quiz-progress-text"><span>第 ${current+1} / ${total} 題</span><span>✅ ${score} 對</span></div></div>`;
+  h+=`<div class="quiz-card"><div class="q-num">第 ${current+1} 題</div><div class="q-dept">${q.dept}</div><div class="q-text">${q.q}</div>`;
+  q.opts.forEach((o,oi)=>{
+    let cls='quiz-option';
+    if(answered){
+      if(oi===correct)cls+=' correct';
+      else if(oi===picked&&picked!==correct)cls+=' wrong';
+    }
+    const click=answered?'':`onclick="pickAnswer(${oi})"`;
+    h+=`<div class="${cls}" ${click}><span class="opt-label">${labels[oi]}</span>${o}</div>`;
+  });
+  if(answered){
+    h+=`<div class="quiz-explain show">💡 ${q.exp}</div>`;
+  }
+  h+=`</div>`;
+  // nav buttons
+  h+=`<div class="quiz-nav">`;
+  if(current>0) h+=`<button class="btn-secondary" onclick="prevQuestion()">◀ 上一題</button>`;
+  if(answered){
+    if(current<total-1) h+=`<button class="btn-next" onclick="nextQuestion()">下一題 ▶</button>`;
+    else h+=`<button class="btn-next" onclick="showSummary()">查看結果 🎯</button>`;
+  }
+  h+=`</div>`;
+  document.getElementById('quizArea').innerHTML=h;
 }
 
-function updateScore(){
-  const total=quizState.questions.length;
-  document.getElementById('quizScore').textContent=`得分：${quizState.score} / ${quizState.answered}（共${total}題）`;
+function pickAnswer(oi){
+  const{questions,current}=quizState;
+  quizState.answers[current]=oi;
+  if(oi===questions[current].ans)quizState.score++;
+  showQuestion();
 }
+function nextQuestion(){quizState.current++;showQuestion();window.scrollTo({top:0,behavior:'smooth'});}
+function prevQuestion(){quizState.current--;showQuestion();window.scrollTo({top:0,behavior:'smooth'});}
 
 function showSummary(){
-  const s=document.getElementById('quizSummary');
-  const total=quizState.questions.length;
-  const pct=Math.round(quizState.score/total*100);
-  s.style.display='block';
-  s.innerHTML=`<h2>測驗完成！</h2><div class="big-score">${pct}%</div><p>答對 ${quizState.score} / ${total} 題</p><p style="margin-top:16px"><button onclick="startQuiz()" style="padding:12px 32px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-family:inherit;font-weight:700">再測一次</button></p>`;
-  s.scrollIntoView({behavior:'smooth'});
+  const{questions,score,answers}=quizState;
+  const total=questions.length;
+  const pct=Math.round(score/total*100);
+  const pass=pct>=60;
+  let h=`<div class="quiz-summary">`;
+  h+=`<h2>測驗完成！</h2>`;
+  h+=`<div class="big-score ${pass?'pass':'fail'}">${pct}%</div>`;
+  h+=`<p>答對 <strong>${score}</strong> / ${total} 題</p>`;
+  h+=`<div class="btn-row"><button class="btn-next" onclick="startQuiz()" style="padding:12px 32px;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;background:var(--accent);color:#fff">🔄 再測一次</button></div>`;
+  // wrong answers review
+  const wrongs=[];
+  questions.forEach((q,i)=>{if(answers[i]!==q.ans)wrongs.push({q,picked:answers[i],idx:i});});
+  if(wrongs.length>0){
+    h+=`<div class="quiz-wrong-list"><h3>❌ 答錯的題目（${wrongs.length} 題）</h3>`;
+    const labels=['A','B','C','D'];
+    wrongs.forEach(w=>{
+      h+=`<div class="quiz-wrong-item"><div class="qw-q">Q${w.idx+1}. ${w.q.q}</div>`;
+      h+=`<div>你的答案：${labels[w.picked]} ${w.q.opts[w.picked]}</div>`;
+      h+=`<div class="qw-a">正確答案：${labels[w.q.ans]} ${w.q.opts[w.q.ans]}</div>`;
+      h+=`<div style="margin-top:4px;font-size:12px;color:var(--text2)">💡 ${w.q.exp}</div></div>`;
+    });
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('quizArea').innerHTML=h;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ====== NAV FUNCTIONS ======
@@ -473,7 +528,14 @@ function toggleTheme(){
   document.getElementById('themeBtn').textContent=isLight?'🌙':'☀️';
   try{localStorage.setItem('theme',isLight?'dark':'light');}catch(e){}
 }
-(function(){try{const t=localStorage.getItem('theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');document.addEventListener('DOMContentLoaded',()=>{document.getElementById('themeBtn').textContent='☀️';});}}catch(e){}})();
+(function(){
+  const html=document.documentElement;
+  try{
+    const t=localStorage.getItem('theme');
+    if(t==='dark'){html.setAttribute('data-theme','dark');document.addEventListener('DOMContentLoaded',()=>{document.getElementById('themeBtn').textContent='🌙';});}
+    else{html.setAttribute('data-theme','light');document.addEventListener('DOMContentLoaded',()=>{document.getElementById('themeBtn').textContent='☀️';});}
+  }catch(e){html.setAttribute('data-theme','light');}
+})();
 
 // ====== INIT ======
 renderSidebar();
